@@ -1,534 +1,622 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="育華國小 四年忠班 教學網站 — 課表、作業、學習資源、活動剪影與班級聯絡資訊。">
+<meta name="theme-color" content="#F2827A">
 <title>育華國小 四年忠班 教學網站</title>
 
-<!-- 字體：雲端微軟正黑體 / Noto Sans TC / 可愛字體 -->
+<!-- 免費圖示：Font Awesome 6 Free (CC BY 4.0 / SIL OFL 1.1 / MIT) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer">
+<!-- 免費字型：Google Fonts (Noto Sans TC / Fredoka) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Rubik+Bubbles&display=swap" rel="stylesheet">
-
-<!-- 免費可愛圖示：Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<style>
-  /* ================= 基礎設定 ================= */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
-    background: linear-gradient(135deg, #fff0f5 0%, #ffe6f2 25%, #e0f7fa 50%, #e8f5e9 75%, #fff3e0 100%);
-    background-attachment: fixed;
-    min-height: 100vh;
-    color: #5a5a5a;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* 背景可愛小氣泡 */
-  .bubble {
-    position: fixed;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.6);
-    z-index: 0;
-    pointer-events: none;
-    animation: float 7s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-18px) rotate(6deg); }
-  }
-
-  /* ================= 標題區 ================= */
-  header {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    padding: 45px 20px 30px;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 7px solid #ff9aa2;
-    box-shadow: 0 4px 25px rgba(0,0,0,0.07);
-  }
-
-  .logo-wrap {
-    display: inline-flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 14px;
-    animation: bounce 2.5s infinite;
-  }
-
-  .school-logo {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.15));
-    transition: all 0.35s;
-  }
-
-  .school-logo:hover {
-    transform: rotate(12deg) scale(1.1);
-  }
-
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-
-  h1 {
-    font-family: "Rubik Bubbles", cursive;
-    font-size: 2.8rem;
-    color: #d63384;
-    text-shadow: 2px 2px 0 #ffd1dc, 4px 4px 0 #ffe0f0;
-    margin: 6px 0 4px;
-  }
-
-  .subtitle {
-    font-size: 1.3rem;
-    color: #6c757d;
-    font-weight: 700;
-    letter-spacing: 3px;
-  }
-
-  /* ================= 導航 ================= */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(14px);
-    border-bottom: 3px dashed #ffb7b2;
-    padding: 13px 0;
-  }
-
-  .nav-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    gap: 28px;
-    flex-wrap: wrap;
-  }
-
-  nav a {
-    text-decoration: none;
-    color: #d63384;
-    font-weight: 700;
-    font-size: 1rem;
-    padding: 9px 18px;
-    border-radius: 24px;
-    transition: all 0.3s;
-    border: 2px solid transparent;
-  }
-
-  nav a:hover {
-    background: #ffd1dc;
-    color: #b3004d;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(214, 51, 132, 0.35);
-  }
-
-  /* ================= QR Code 區 ================= */
-  .qr-section {
-    text-align: center;
-    padding: 70px 20px 50px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .qr-card {
-    display: inline-block;
-    background: #ffffff;
-    border: 10px solid #ffd1dc;
-    border-radius: 30px;
-    padding: 26px;
-    box-shadow: 0 16px 50px rgba(0,0,0,0.12);
-    animation: pulse 3.5s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { box-shadow: 0 16px 50px rgba(214, 51, 132, 0.14); }
-    50% { box-shadow: 0 16px 50px rgba(255, 209, 220, 0.45); }
-  }
-
-  .qr-card img {
-    width: 450px;
-    height: 450px;
-    object-fit: contain;
-    border-radius: 18px;
-    display: block;
-    margin: 0 auto;
-  }
-
-  .qr-label {
-    margin-top: 22px;
-    font-size: 1.5rem;
-    color: #d63384;
-    font-weight: 900;
-    letter-spacing: 4px;
-  }
-
-  /* ================= 內容區塊 ================= */
-  main {
-    max-width: 1000px;
-    margin: 45px auto;
-    padding: 0 20px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .section {
-    background: rgba(255, 255, 255, 0.92);
-    border-radius: 32px;
-    padding: 45px 35px;
-    margin-bottom: 35px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    border: 4px solid transparent;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .section::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 10px;
-    border-radius: 32px 32px 0 0;
-  }
-
-  .section.announcement::before { background: linear-gradient(90deg, #ff9aa2, #ffd1dc); }
-  .section.schedule::before    { background: linear-gradient(90deg, #b5ead7, #c7ceea); }
-  .section.resource::before    { background: linear-gradient(90deg, #ffd3b6, #ffaaa5); }
-  .section.contact::before     { background: linear-gradient(90deg, #cdb4db, #ffc8dd); }
-
-  .section-title {
-    font-size: 2rem;
-    font-weight: 900;
-    color: #d63384;
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .section-title i {
-    font-size: 2.2rem;
-    filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.2));
-  }
-
-  /* 公告 */
-  .announce-list {
-    list-style: none;
-  }
-
-  .announce-list li {
-    padding: 16px 0;
-    border-bottom: 1px dashed #ffd1dc;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    font-size: 1.1rem;
-  }
-
-  .announce-list li:last-child { border-bottom: none; }
-
-  .announce-list i { color: #ff6b81; font-size: 1.3rem; }
-
-  .date-tag {
-    font-size: 0.85rem;
-    background: #ffe0f0;
-    color: #d63384;
-    padding: 4px 12px;
-    border-radius: 14px;
-    font-weight: 800;
-    margin-left: auto;
-  }
-
-  /* 課表 */
-  .schedule-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    border-radius: 20px;
-    overflow: hidden;
-  }
-
-  .schedule-table th,
-  .schedule-table td {
-    padding: 16px 14px;
-    text-align: center;
-    border: 1px solid #ffe0f0;
-  }
-
-  .schedule-table th {
-    background: #d63384;
-    color: #fff;
-    font-weight: 900;
-    font-size: 1.15rem;
-  }
-
-  .schedule-table tr:nth-child(even) td { background: #fff0f5; }
-
-  .schedule-table td.subject {
-    font-weight: 800;
-    color: #b3004d;
-  }
-
-  .schedule-table td i {
-    margin-right: 8px;
-    color: #ff8fa3;
-  }
-
-  /* 學習資源 */
-  .resource-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 24px;
-  }
-
-  .resource-card {
-    background: #fff;
-    border: 4px solid #ffe0f0;
-    border-radius: 24px;
-    padding: 28px 18px;
-    text-align: center;
-    transition: transform 0.35s, box-shadow 0.35s;
-    cursor: pointer;
-  }
-
-  .resource-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 30px rgba(214, 51, 132, 0.18);
-    border-color: #d63384;
-  }
-
-  .resource-card i {
-    font-size: 3.5rem;
-    color: #d63384;
-    margin-bottom: 14px;
-    display: block;
-  }
-
-  .resource-card h3 {
-    font-size: 1.25rem;
-    color: #4a4a4a;
-    margin-bottom: 8px;
-  }
-
-  .resource-card p {
-    font-size: 0.95rem;
-    color: #888;
-  }
-
-  /* 聯絡 */
-  .contact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-  }
-
-  .contact-item {
-    background: #fff;
-    border: 4px solid #ffe0f0;
-    border-radius: 24px;
-    padding: 28px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .contact-item i {
-    font-size: 3rem;
-    color: #d63384;
-  }
-
-  .contact-item strong {
-    color: #b3004d;
-    font-size: 1.2rem;
-  }
-
-  .contact-item span {
-    color: #666;
-    font-size: 1rem;
-  }
-
-  /* ================= 頁尾 ================= */
-  footer {
-    text-align: center;
-    padding: 50px 20px;
-    color: #d63384;
-    font-weight: 700;
-    background: rgba(255, 255, 255, 0.75);
-    border-top: 6px solid #ffb7b2;
-    margin-top: 50px;
-  }
-
-  footer p { margin-bottom: 10px; }
-  footer i { color: #ff6b81; margin-right: 6px; }
-
-  /* 響應式 */
-  @media (max-width: 640px) {
-    h1 { font-size: 2.2rem; }
-    .qr-card img { width: 330px; height: 330px; }
-    .nav-container { gap: 14px; font-size: 0.9rem; }
-    .section { padding: 35px 22px; }
-    .school-logo { width: 80px; height: 80px; }
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="logo.png">
 </head>
 <body>
 
-  <!-- 背景可愛小氣泡 -->
-  <div class="bubble" style="width: 130px; height: 130px; top: 8%; left: 6%; animation-delay: 0s;"></div>
-  <div class="bubble" style="width: 90px; height: 90px; bottom: 12%; right: 12%; animation-delay: 2s;"></div>
-  <div class="bubble" style="width: 110px; height: 110px; top: 38%; right: 6%; animation-delay: 4s;"></div>
-  <div class="bubble" style="width: 70px; height: 70px; bottom: 38%; left: 14%; animation-delay: 1s;"></div>
+<!-- 貓爪浮動裝飾 -->
+<div class="paw-decor" aria-hidden="true">
+  <i class="fa-solid fa-paw"></i><i class="fa-solid fa-paw"></i><i class="fa-solid fa-paw"></i>
+  <i class="fa-solid fa-paw"></i><i class="fa-solid fa-paw"></i><i class="fa-solid fa-paw"></i>
+</div>
 
-  <header>
-    <div class="logo-wrap">
-      <img src="logopic.png" alt="育華國小Logo" class="school-logo">
-      <div>
-        <div style="font-size: 0.95rem; color: #ff6b81; font-weight: 900; letter-spacing: 2px;">育華國小</div>
-        <div style="font-size: 0.8rem; color: #888;">YU HUA ELEMENTARY SCHOOL</div>
+<a class="skip-link" href="#main">跳到主要內容</a>
+
+<!-- ==================== 導覽列 ==================== -->
+<header class="site-header" id="top">
+  <div class="container nav-inner">
+    <a class="brand" href="#top">
+      <img src="logo.png" alt="育華國小 四年忠班 班徽（布偶貓）" class="brand-logo">
+      <span class="brand-text">
+        <strong>育華國小</strong>
+        <span>四年忠班</span>
+      </span>
+    </a>
+
+    <nav class="nav-menu" id="navMenu" aria-label="主要導覽">
+      <ul>
+        <li><a href="#home" class="nav-link active"><i class="fa-solid fa-house"></i><span>首頁</span></a></li>
+        <li><a href="#class" class="nav-link"><i class="fa-solid fa-chalkboard-user"></i><span>班級</span></a></li>
+        <li><a href="#timetable" class="nav-link"><i class="fa-solid fa-calendar-days"></i><span>課表</span></a></li>
+        <li><a href="#homework" class="nav-link"><i class="fa-solid fa-pen-ruler"></i><span>作業</span></a></li>
+        <li><a href="#resources" class="nav-link"><i class="fa-solid fa-book-open"></i><span>資源</span></a></li>
+        <li><a href="#activities" class="nav-link"><i class="fa-solid fa-party-horn"></i><span>活動</span></a></li>
+        <li><a href="#gallery" class="nav-link"><i class="fa-solid fa-images"></i><span>相簿</span></a></li>
+        <li><a href="#contact" class="nav-link"><i class="fa-solid fa-address-book"></i><span>聯絡</span></a></li>
+      </ul>
+      <a href="#qrcode" class="btn btn-primary btn-sm nav-cta"><i class="fa-solid fa-qrcode"></i> 加入班級</a>
+    </nav>
+
+    <button class="nav-toggle" id="navToggle" aria-label="開啟選單" aria-expanded="false" aria-controls="navMenu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ==================== 首頁 Hero ==================== -->
+  <section class="hero" id="home">
+    <div class="hero-bg" aria-hidden="true">
+      <span class="blob blob-1"></span>
+      <span class="blob blob-2"></span>
+      <span class="blob blob-3"></span>
+    </div>
+
+    <div class="container hero-inner">
+      <div class="hero-copy reveal">
+        <p class="eyebrow"><i class="fa-solid fa-graduation-cap"></i> 育華國小 教學網站</p>
+        <h1 class="hero-title">
+          <span class="hl">四年忠班</span>
+          <span class="hero-sub">我們的成長小天地</span>
+        </h1>
+        <p class="hero-desc">
+          歡迎來到四年忠班的教室！這裡有本週課表、回家作業、學習資源與校園活動剪影，
+          隨時掌握班級大小事，和老師同學一起快樂學習。
+        </p>
+
+        <div class="hero-actions">
+          <a href="#qrcode" class="btn btn-primary"><i class="fa-solid fa-qrcode"></i> 掃碼加入我們</a>
+          <a href="#timetable" class="btn btn-ghost"><i class="fa-solid fa-calendar-days"></i> 查看課表</a>
+        </div>
+
+        <ul class="hero-stats">
+          <li><b data-count="28">0</b><span>位同學</span></li>
+          <li><b data-count="6">0</b><span>門主要科目</span></li>
+          <li><b data-count="1">0</b><span>位愛心的老師</span></li>
+        </ul>
+      </div>
+
+      <div class="hero-art reveal" style="--d:.15s">
+        <div class="art-frame">
+          <div class="art-ring" aria-hidden="true"></div>
+          <img src="logo.png" alt="班級貓咪布偶貓" class="art-logo">
+          <span class="art-chip chip-1"><i class="fa-solid fa-heart"></i> 熱愛學習</span>
+          <span class="art-chip chip-2"><i class="fa-solid fa-star"></i> 四年忠班</span>
+          <span class="art-chip chip-3"><i class="fa-solid fa-cake-candles"></i> 生日快樂</span>
+        </div>
       </div>
     </div>
-    <h1>四年忠班 <i class="fa-solid fa-school" style="color:#ff6b81;"></i></h1>
-    <div class="subtitle">教學網站 &nbsp;📚</div>
-  </header>
 
-  <nav>
-    <div class="nav-container">
-      <a href="#announcement"><i class="fa-solid fa-bullhorn"></i> 最新公告</a>
-      <a href="#schedule"><i class="fa-solid fa-calendar-days"></i> 課程時間表</a>
-      <a href="#resource"><i class="fa-solid fa-book"></i> 學習資源</a>
-      <a href="#contact"><i class="fa-solid fa-envelope"></i> 聯絡我們</a>
-    </div>
-  </nav>
+    <div class="hero-wave" aria-hidden="true"></div>
+  </section>
 
-  <!-- QR Code 區塊 -->
-  <section class="qr-section">
-    <div class="qr-card">
-      <img src="qrcode_yhes.chc.edu.tw.png" alt="班級QR Code">
-      <div class="qr-label">掃描 QR Code 進入班級網站</div>
+  <!-- ==================== QR Code ==================== -->
+  <section class="section section-qr" id="qrcode">
+    <div class="container">
+      <header class="section-head reveal">
+        <span class="tag"><i class="fa-solid fa-qrcode"></i> 一掃即知</span>
+        <h2>班級 QR Code</h2>
+        <p>用手機或平板掃描下方 QR Code，連結到班級網站首頁（index.html）。</p>
+      </header>
+
+      <div class="qr-panel reveal">
+        <figure class="qr-card">
+          <div class="qr-frame">
+            <!-- QR 圖檔：450 x 450 px -->
+            <img src="qrcode.png" alt="四年忠班網站首頁 QR Code（450x450）" class="qr-img" width="450" height="450">
+            <span class="qr-corner tl" aria-hidden="true"></span>
+            <span class="qr-corner tr" aria-hidden="true"></span>
+            <span class="qr-corner bl" aria-hidden="true"></span>
+            <span class="qr-corner br" aria-hidden="true"></span>
+          </div>
+          <figcaption>
+            <i class="fa-solid fa-camera-retro"></i> 掃描QR Code 進入首頁
+          </figcaption>
+        </figure>
+
+        <div class="qr-info">
+          <h3><i class="fa-solid fa-mobile-screen-button"></i> 掃碼快速進入</h3>
+          <p>
+            將行動裝置的相機對準 QR Code，即可開啟四年忠班教學網站首頁，
+            隨時查看課表、繳交作業與接收班級公告。
+          </p>
+          <ul class="qr-points">
+            <li><i class="fa-solid fa-circle-check"></i> 免安裝 App，瀏覽器直接開啟</li>
+            <li><i class="fa-solid fa-circle-check"></i> 手機、電腦、平板皆可掃描</li>
+            <li><i class="fa-solid fa-circle-check"></i> 建議加入主畫面，一指即開</li>
+          </ul>
+          <div class="qr-actions">
+            <a href="qrcode.png" download="四年忠班-qrcode.png" class="btn btn-primary btn-sm">
+              <i class="fa-solid fa-download"></i> 下載 QR Code 圖片
+            </a>
+            <button type="button" class="btn btn-ghost btn-sm" id="printBtn">
+              <i class="fa-solid fa-print"></i> 列印本頁
+            </button>
+          </div>
+          <!--
+            ※ 更換 QR Code 內容的說明：
+            QR 圖檔 qrcode.png 目前編碼的內容為 "index.html"。
+            若網站上架到正式網址，請到 https://www.qr-code-generator.com
+            重新產生一張 450x450 的圖片，並覆蓋 qrcode.png 即可。
+          -->
+        </div>
+      </div>
     </div>
   </section>
 
-  <main>
-    <!-- 公告 -->
-    <section class="section announcement" id="announcement">
-      <div class="section-title">
-        <i class="fa-solid fa-bullhorn"></i>
-        最新公告
-      </div>
-      <ul class="announce-list">
-        <li><i class="fa-solid fa-circle-info"></i> 歡迎來到四年忠班教學網站！這裡會定期更新課堂活動與作業資訊。<span class="date-tag">2026-10-21</span></li>
-        <li><i class="fa-solid fa-pencil"></i> 本週語文作業：撰寫《我的最愛》作文，請於週五前繳交。<span class="date-tag">2026-10-23</span></li>
-        <li><i class="fa-solid fa-science"></i> 自然課程將進行「植物觀察」實驗，請帶一盆小綠植到校。<span class="date-tag">2026-10-26</span></li>
-        <li><i class="fa-solid fa-cake-candles"></i> 班上壽星慶生會，歡迎帶分享小禮物參與。<span class="date-tag">2026-10-30</span></li>
-      </ul>
-    </section>
+  <!-- ==================== 班級資訊 ==================== -->
+  <section class="section section-alt" id="class">
+    <div class="container">
+      <header class="section-head reveal">
+        <span class="tag"><i class="fa-solid fa-users-group"></i> 我們的班級</span>
+        <h2>班級基本資料</h2>
+        <p>一起認識四年忠班的導師、教室與班級特色。</p>
+      </header>
 
-    <!-- 課表 -->
-    <section class="section schedule" id="schedule">
-      <div class="section-title">
-        <i class="fa-solid fa-calendar-days"></i>
-        課程時間表
-      </div>
-      <table class="schedule-table">
-        <thead>
-          <tr>
-            <th>節次</th><th>星期一</th><th>星期二</th><th>星期三</th><th>星期四</th><th>星期五</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>第一節</td><td class="subject"><i class="fa-solid fa-book"></i> 語文</td><td class="subject"><i class="fa-solid fa-calculator"></i> 數學</td><td class="subject"><i class="fa-solid fa-paint-brush"></i> 美術</td><td class="subject"><i class="fa-solid fa-music"></i> 音樂</td><td class="subject"><i class="fa-solid fa-book"></i> 語文</td></tr>
-          <tr><td>第二節</td><td class="subject"><i class="fa-solid fa-calculator"></i> 數學</td><td class="subject"><i class="fa-solid fa-book"></i> 語文</td><td class="subject"><i class="fa-solid fa-music"></i> 音樂</td><td class="subject"><i class="fa-solid fa-calculator"></i> 數學</td><td class="subject"><i class="fa-solid fa-paint-brush"></i> 美術</td></tr>
-          <tr><td>第三節</td><td class="subject"><i class="fa-solid fa-leaf"></i> 自然</td><td class="subject"><i class="fa-solid fa-globe"></i> 社會</td><td class="subject"><i class="fa-solid fa-person-running"></i> 體育</td><td class="subject"><i class="fa-solid fa-book"></i> 語文</td><td class="subject"><i class="fa-solid fa-calculator"></i> 數學</td></tr>
-          <tr><td>第四節</td><td class="subject"><i class="fa-solid fa-globe"></i> 社會</td><td class="subject"><i class="fa-solid fa-leaf"></i> 自然</td><td class="subject"><i class="fa-solid fa-book"></i> 語文</td><td class="subject"><i class="fa-solid fa-person-running"></i> 體育</td><td class="subject"><i class="fa-solid fa-music"></i> 音樂</td></tr>
-          <tr><td>第五節</td><td class="subject"><i class="fa-solid fa-person-running"></i> 體育</td><td class="subject"><i class="fa-solid fa-book"></i> 語文</td><td class="subject"><i class="fa-solid fa-calculator"></i> 數學</td><td class="subject"><i class="fa-solid fa-leaf"></i> 自然</td><td class="subject"><i class="fa-solid fa-book"></i> 語文</td></tr>
-        </tbody>
-      </table>
-    </section>
+      <div class="info-grid">
+        <article class="info-card reveal">
+          <div class="info-icon bg-peach"><i class="fa-solid fa-chalkboard-user"></i></div>
+          <h3>班主任老師</h3>
+          <p class="tbd">【請填入導師姓名】</p>
+          <span class="info-meta"><i class="fa-solid fa-envelope"></i> <span class="tbd">【請填入電子郵件】</span></span>
+        </article>
 
-    <!-- 學習資源 -->
-    <section class="section resource" id="resource">
-      <div class="section-title">
-        <i class="fa-solid fa-book"></i>
-        學習資源
-      </div>
-      <div class="resource-grid">
-        <div class="resource-card">
-          <i class="fa-solid fa-tablet-screen"></i>
-          <h3>數位練習</h3>
-          <p>線上互動練習題庫</p>
-        </div>
-        <div class="resource-card">
-          <i class="fa-solid fa-video"></i>
-          <h3>課程影片</h3>
-          <p>重點概念動畫影片</p>
-        </div>
-        <div class="resource-card">
-          <i class="fa-solid fa-download"></i>
-          <h3>作業下載</h3>
-          <p>本週作業紙 PDF</p>
-        </div>
-        <div class="resource-card">
-          <i class="fa-solid fa-photo-film"></i>
-          <h3>班級相簿</h3>
-          <p>課堂活動照片集</p>
-        </div>
-      </div>
-    </section>
+        <article class="info-card reveal" style="--d:.08s">
+          <div class="info-icon bg-mint"><i class="fa-solid fa-door-open"></i></div>
+          <h3>教室位置</h3>
+          <p class="tbd">【請填入教室樓層／編號】</p>
+          <span class="info-meta"><i class="fa-solid fa-location-dot"></i> 育華國小</span>
+        </article>
 
-    <!-- 聯絡 -->
-    <section class="section contact" id="contact">
-      <div class="section-title">
-        <i class="fa-solid fa-envelope"></i>
-        聯絡我們
+        <article class="info-card reveal" style="--d:.16s">
+          <div class="info-icon bg-sky"><i class="fa-solid fa-users"></i></div>
+          <h3>班級人數</h3>
+          <p><b>28</b> 位同學</p>
+          <span class="info-meta"><i class="fa-solid fa-hand"></i> 男女比 【請填入】</span>
+        </article>
+
+        <article class="info-card reveal" style="--d:.24s">
+          <div class="info-icon bg-butter"><i class="fa-solid fa-clock"></i></div>
+          <h3>導師辦公時間</h3>
+          <p class="tbd">【請填入例行時間】</p>
+          <span class="info-meta"><i class="fa-solid fa-phone"></i> <span class="tbd">【請填入電話】</span></span>
+        </article>
       </div>
-      <div class="contact-grid">
-        <div class="contact-item">
-          <i class="fa-solid fa-user-tie"></i>
-          <strong>班導師</strong>
-          <span>王老師</span>
+
+      <div class="feature-list">
+        <article class="feature reveal">
+          <span class="feature-num">01</span>
+          <h3><i class="fa-solid fa-cubes"></i> 分組合作</h3>
+          <p>以小組為單位進行討論與發表，訓練孩子勇於表達、樂於傾聽，累積面對挑戰的信心。</p>
+        </article>
+        <article class="feature reveal" style="--d:.1s">
+          <span class="feature-num">02</span>
+          <h3><i class="fa-solid fa-palette"></i> 藝術創作</h3>
+          <p>每學期至少完成兩件班級共同創作，讓每一筆畫、每一個想法都留下成長的痕跡。</p>
+        </article>
+        <article class="feature reveal" style="--d:.2s">
+          <span class="feature-num">03</span>
+          <h3><i class="fa-solid fa-seedling"></i> 品格教育</h3>
+          <p>每週一則「小故事大道理」，從生活中實踐禮貌、感恩與負責任，成為溫暖的小主人。</p>
+        </article>
+        <article class="feature reveal" style="--d:.3s">
+          <span class="feature-num">04</span>
+          <h3><i class="fa-solid fa-dumbbell"></i> 多元活動</h3>
+          <p>運動會、閱讀認跑、戶外教學與班級接力的回憶，都會好好收進班級相簿裡。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 課表 ==================== -->
+  <section class="section" id="timetable">
+    <div class="container">
+      <header class="section-head reveal">
+        <span class="tag"><i class="fa-solid fa-calendar-days"></i> 每週課表</span>
+        <h2>四年忠班 課表</h2>
+        <p>請依下表準備上課用品，也別忘了課本與作業本喔！</p>
+      </header>
+
+      <div class="table-wrap reveal">
+        <table class="timetable">
+          <caption class="sr-only">四年忠班每週課表</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="period-col">節次</th>
+              <th scope="col"><i class="fa-solid fa-sun"></i> 星期一</th>
+              <th scope="col"><i class="fa-solid fa-cloud-sun"></i> 星期二</th>
+              <th scope="col"><i class="fa-solid fa-cloud"></i> 星期三</th>
+              <th scope="col"><i class="fa-solid fa-cloud-sun"></i> 星期四</th>
+              <th scope="col"><i class="fa-solid fa-cloud"></i> 星期五</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" class="period-col"><span>第 1 節</span><small>08:00</small></th>
+              <td><span class="subj subj-cn">國語</span><i class="fa-solid fa-book"></i></td>
+              <td><span class="subj subj-math">數學</span><i class="fa-solid fa-calculator"></i></td>
+              <td><span class="subj subj-cn">國語</span><i class="fa-solid fa-book"></i></td>
+              <td><span class="subj subj-sci">自然</span><i class="fa-solid fa-leaf"></i></td>
+              <td><span class="subj subj-en">英語</span><i class="fa-solid fa-language"></i></td>
+            </tr>
+            <tr>
+              <th scope="row" class="period-col"><span>第 2 節</span><small>08:55</small></th>
+              <td><span class="subj subj-math">數學</span><i class="fa-solid fa-calculator"></i></td>
+              <td><span class="subj subj-en">英語</span><i class="fa-solid fa-language"></i></td>
+              <td><span class="subj subj-math">數學</span><i class="fa-solid fa-calculator"></i></td>
+              <td><span class="subj subj-cn">國語</span><i class="fa-solid fa-book"></i></td>
+              <td><span class="subj subj-sci">自然</span><i class="fa-solid fa-leaf"></i></td>
+            </tr>
+            <tr>
+              <th scope="row" class="period-col"><span>第 3 節</span><small>09:50</small></th>
+              <td><span class="subj subj-soc">社會</span><i class="fa-solid fa-globe"></i></td>
+              <td><span class="subj subj-soc">社會</span><i class="fa-solid fa-globe"></i></td>
+              <td><span class="subj subj-en">英語</span><i class="fa-solid fa-language"></i></td>
+              <td><span class="subj subj-math">數學</span><i class="fa-solid fa-calculator"></i></td>
+              <td><span class="subj subj-cn">國語</span><i class="fa-solid fa-book"></i></td>
+            </tr>
+            <tr>
+              <th scope="row" class="period-col"><span>第 4 節</span><small>10:45</small></th>
+              <td><span class="subj subj-arts">音樂</span><i class="fa-solid fa-music"></i></td>
+              <td><span class="subj subj-arts">體育</span><i class="fa-solid fa-person-running"></i></td>
+              <td><span class="subj subj-arts">美術</span><i class="fa-solid fa-brush"></i></td>
+              <td><span class="subj subj-soc">社會</span><i class="fa-solid fa-globe"></i></td>
+              <td><span class="subj subj-eco">綜合</span><i class="fa-solid fa-puzzle-piece"></i></td>
+            </tr>
+            <tr>
+              <th scope="row" class="period-col"><span>第 5 節</span><small>13:30</small></th>
+              <td><span class="subj subj-arts">體育</span><i class="fa-solid fa-person-running"></i></td>
+              <td><span class="subj subj-eco">綜合</span><i class="fa-solid fa-puzzle-piece"></i></td>
+              <td><span class="subj subj-arts">音樂</span><i class="fa-solid fa-music"></i></td>
+              <td><span class="subj subj-arts">美術</span><i class="fa-solid fa-brush"></i></td>
+              <td><span class="subj subj-eco">班級活動</span><i class="fa-solid fa-chalkboard"></i></td>
+            </tr>
+            <tr>
+              <th scope="row" class="period-col"><span>第 6 節</span><small>14:25</small></th>
+              <td><span class="subj subj-eco">綜合</span><i class="fa-solid fa-puzzle-piece"></i></td>
+              <td><span class="subj subj-arts">美術</span><i class="fa-solid fa-brush"></i></td>
+              <td><span class="subj subj-soc">社會</span><i class="fa-solid fa-globe"></i></td>
+              <td><span class="subj subj-en">英語</span><i class="fa-solid fa-language"></i></td>
+              <td><span class="subj subj-arts">體育</span><i class="fa-solid fa-person-running"></i></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="table-note reveal">
+        <i class="fa-solid fa-circle-info"></i>
+        課表時間僅供參考，實際以導師公告與學校行事曆為準。
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== 作業 ==================== -->
+  <section class="section section-alt" id="homework">
+    <div class="container">
+      <header class="section-head reveal">
+        <span class="tag"><i class="fa-solid fa-pen-ruler"></i> 回家作業</span>
+        <h2>本週作業與提醒</h2>
+        <p>作業以「完成、訂正、準時」為目標，同學們加油喔！</p>
+      </header>
+
+      <div class="hw-grid">
+        <article class="hw-card reveal">
+          <div class="hw-head">
+            <span class="hw-icon bg-peach"><i class="fa-solid fa-book-open"></i></span>
+            <div>
+              <h3>國語</h3>
+              <span class="hw-due"><i class="fa-regular fa-clock"></i> 週五 16:00 截止</span>
+            </div>
+          </div>
+          <ul class="hw-list">
+            <li><i class="fa-solid fa-check"></i> 課本第三單元朗讀 3 遍</li>
+            <li><i class="fa-solid fa-check"></i> 國語作業簿 P.【請填入】</li>
+            <li><i class="fa-solid fa-check"></i> 每日閱讀 20 分鐘並簽章</li>
+          </ul>
+        </article>
+
+        <article class="hw-card reveal" style="--d:.08s">
+          <div class="hw-head">
+            <span class="hw-icon bg-mint"><i class="fa-solid fa-calculator"></i></span>
+            <div>
+              <h3>數學</h3>
+              <span class="hw-due"><i class="fa-regular fa-clock"></i> 週三 16:00 截止</span>
+            </div>
+          </div>
+          <ul class="hw-list">
+            <li><i class="fa-solid fa-check"></i> 數學作業簿 P.【請填入】</li>
+            <li><i class="fa-solid fa-check"></i> 練習卷【請填入】</li>
+            <li><i class="fa-solid fa-check"></i> 隨堂複習：九九乘法與除法</li>
+          </ul>
+        </article>
+
+        <article class="hw-card reveal" style="--d:.16s">
+          <div class="hw-head">
+            <span class="hw-icon bg-sky"><i class="fa-solid fa-leaf"></i></span>
+            <div>
+              <h3>自然</h3>
+              <span class="hw-due"><i class="fa-regular fa-clock"></i> 週四 16:00 截止</span>
+            </div>
+          </div>
+          <ul class="hw-list">
+            <li><i class="fa-solid fa-check"></i> 觀察紀錄：植物的生長</li>
+            <li><i class="fa-solid fa-check"></i> 完成自然講義【請填入】</li>
+            <li><i class="fa-solid fa-check"></i> 準備一張觀察照片</li>
+          </ul>
+        </article>
+
+        <article class="hw-card reveal" style="--d:.24s">
+          <div class="hw-head">
+            <span class="hw-icon bg-butter"><i class="fa-solid fa-language"></i></span>
+            <div>
+              <h3>英語</h3>
+              <span class="hw-due"><i class="fa-regular fa-clock"></i> 週五 16:00 截止</span>
+            </div>
+          </div>
+          <ul class="hw-list">
+            <li><i class="fa-solid fa-check"></i> 單字複習 10 個</li>
+            <li><i class="fa-solid fa-check"></i> 英語作業簿 P.【請填入】</li>
+            <li><i class="fa-solid fa-check"></i> 跟讀音檔 10 分鐘</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="notice reveal">
+        <i class="fa-solid fa-bell"></i>
+        <div>
+          <strong>溫馨提醒</strong>
+          <p>作業有不懂的地方請先複習課本；真的不會時，請在連絡本或 LINE 上告訴老師，別擔心喔！</p>
         </div>
-        <div class="contact-item">
-          <i class="fa-solid fa-phone"></i>
-          <strong>電話</strong>
-          <span>(02) 1234-5678</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 學習資源 ==================== -->
+  <section class="section" id="resources">
+    <div class="container">
+      <header class="section-head reveal">
+        <span class="tag"><i class="fa-solid fa-book-open-reader"></i> 學習資源</span>
+        <h2>好用的免費學習工具</h2>
+        <p>以下皆為免費資源，鼓勵家長陪同孩子一起使用。</p>
+      </header>
+
+      <div class="res-grid">
+        <a class="res-card reveal" href="https://dict.revised.moe.edu.tw/" target="_blank" rel="noopener">
+          <span class="res-icon bg-peach"><i class="fa-solid fa-spell-check"></i></span>
+          <h3>教育部重編國語辭典</h3>
+          <p>查字詞、注音、釋義與例句，寫作文的好幫手。</p>
+          <span class="res-link">前往 <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="res-card reveal" style="--d:.06s" href="https://www.khanacademy.org/tw" target="_blank" rel="noopener">
+          <span class="res-icon bg-mint"><i class="fa-solid fa-infinity"></i></span>
+          <h3>Khan Academy</h3>
+          <p>免費線上課程，數學與自然練習題目豐富。</p>
+          <span class="res-link">前往 <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="res-card reveal" style="--d:.12s" href="https://www.reading.edu.tw/" target="_blank" rel="noopener">
+          <span class="res-icon bg-sky"><i class="fa-solid fa-book-reader"></i></span>
+          <h3>ReadMo 閱讀</h3>
+          <p>線上圖書館，適合四年級的橋梁書與科普書。</p>
+          <span class="res-link">前往 <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="res-card reveal" style="--d:.18s" href="https://www.edu.tw/" target="_blank" rel="noopener">
+          <span class="res-icon bg-butter"><i class="fa-solid fa-graduation-cap"></i></span>
+          <h3>教育部 教育資源網</h3>
+          <p>九年一貫課程綱要、教材與線上學習資源。</p>
+          <span class="res-link">前往 <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="res-card reveal" style="--d:.24s" href="https://g0v.lympe.tku.edu.tw/gs/" target="_blank" rel="noopener">
+          <span class="res-icon bg-lilac"><i class="fa-solid fa-flask"></i></span>
+          <h3>PhET 互動模擬</h3>
+          <p>有趣的自然科學模擬實驗，在家也能動手做。</p>
+          <span class="res-link">前往 <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="res-card reveal" style="--d:.3s" href="https://www.google.com/search?q=%E8%82%B2%E8%8B%B1%E5%96%AE%E8%A9%9E%E5%8F%98%E5%8C%96%E8%BE%A8%E5%BC%8F" target="_blank" rel="noopener">
+          <span class="res-icon bg-rose"><i class="fa-solid fa-language"></i></span>
+          <h3>英文單字工具</h3>
+          <p>單字變化、發音與例句，幫助英語學習更輕鬆。</p>
+          <span class="res-link">前往 <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 活動 ==================== -->
+  <section class="section section-alt" id="activities">
+    <div class="container">
+      <header class="section-head reveal">
+        <span class="tag"><i class="fa-solid fa-party-horn"></i> 校園活動</span>
+        <h2>成長的美好回憶</h2>
+        <p>四年級的每一場活動，都是我們一起走過的印記。</p>
+      </header>
+
+      <div class="timeline">
+        <article class="tl-item reveal">
+          <div class="tl-dot"><i class="fa-solid fa-running"></i></div>
+          <div class="tl-body">
+            <span class="tl-date">【請填入日期】</span>
+            <h3>校際運動會</h3>
+            <p>全班一起加油吶喊，Funny 接力連勝，汗水與笑聲都成了最好的回憶。</p>
+          </div>
+        </article>
+
+        <article class="tl-item reveal" style="--d:.1s">
+          <div class="tl-dot"><i class="fa-solid fa-tree"></i></div>
+          <div class="tl-body">
+            <span class="tl-date">【請填入日期】</span>
+            <h3>戶外教學活動</h3>
+            <p>走進自然觀察步道，認識在地生態，學會尊重與保護環境。</p>
+          </div>
+        </article>
+
+        <article class="tl-item reveal" style="--d:.2s">
+          <div class="tl-dot"><i class="fa-solid fa-cake-candles"></i></div>
+          <div class="tl-body">
+            <span class="tl-date">【請填入日期】</span>
+            <h3>班級生日會</h3>
+            <p>一起唱生日歌、分享蛋糕許願，把祝福送給每一位壽星。</p>
+          </div>
+        </article>
+
+        <article class="tl-item reveal" style="--d:.3s">
+          <div class="tl-dot"><i class="fa-solid fa-paintbrush"></i></div>
+          <div class="tl-body">
+            <span class="tl-date">【請填入日期】</span>
+            <h3>班級共同創作展</h3>
+            <p>每人完成一格，合力拼出巨幅壁畫，掛在教室最顯眼的牆上。</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 相簿 ==================== -->
+  <section class="section" id="gallery">
+    <div class="container">
+      <header class="section-head reveal">
+        <span class="tag"><i class="fa-solid fa-images"></i> 班級相簿</span>
+        <h2>珍貴的畫面</h2>
+        <p>（照片請放置於 <code>images</code> 資料夾，檔名對應下方說明）</p>
+      </header>
+
+      <div class="gallery-grid">
+        <figure class="g-item g-wide reveal">
+          <div class="g-ph g-1"><i class="fa-solid fa-camera-retro"></i><span>images/photo-1.jpg</span></div>
+          <figcaption>班級合體照</figcaption>
+        </figure>
+        <figure class="g-item reveal" style="--d:.06s">
+          <div class="g-ph g-2"><i class="fa-solid fa-camera-retro"></i><span>images/photo-2.jpg</span></div>
+          <figcaption>運動會加油</figcaption>
+        </figure>
+        <figure class="g-item reveal" style="--d:.12s">
+          <div class="g-ph g-3"><i class="fa-solid fa-camera-retro"></i><span>images/photo-3.jpg</span></div>
+          <figcaption>校外教學</figcaption>
+        </figure>
+        <figure class="g-item reveal" style="--d:.18s">
+          <div class="g-ph g-4"><i class="fa-solid fa-camera-retro"></i><span>images/photo-4.jpg</span></div>
+          <figcaption>生日會</figcaption>
+        </figure>
+        <figure class="g-item g-wide reveal" style="--d:.24s">
+          <div class="g-ph g-5"><i class="fa-solid fa-camera-retro"></i><span>images/photo-5.jpg</span></div>
+          <figcaption>班級共同創作</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 聯絡 ==================== -->
+  <section class="section section-alt" id="contact">
+    <div class="container">
+      <header class="section-head reveal">
+        <span class="tag"><i class="fa-solid fa-address-book"></i> 聯絡我們</span>
+        <h2>老師聯絡資訊</h2>
+        <p>有任何問題，歡迎隨時與導師聯繫！</p>
+      </header>
+
+      <div class="contact-panel reveal">
+        <div class="contact-cards">
+          <div class="ct-card">
+            <span class="ct-icon"><i class="fa-solid fa-user-tie"></i></span>
+            <div>
+              <h4>班主任老師</h4>
+              <p class="tbd">【請填入導師姓名】</p>
+            </div>
+          </div>
+          <div class="ct-card">
+            <span class="ct-icon"><i class="fa-solid fa-phone"></i></span>
+            <div>
+              <h4>校內電話</h4>
+              <p class="tbd">【請填入分機號碼】</p>
+            </div>
+          </div>
+          <div class="ct-card">
+            <span class="ct-icon"><i class="fa-solid fa-envelope"></i></span>
+            <div>
+              <h4>電子郵件</h4>
+              <p class="tbd">【請填入電子郵件】</p>
+            </div>
+          </div>
+          <div class="ct-card">
+            <span class="ct-icon"><i class="fa-solid fa-clock"></i></span>
+            <div>
+              <h4>辦公／接聽時間</h4>
+              <p class="tbd">【請填入時間】</p>
+            </div>
+          </div>
         </div>
-        <div class="contact-item">
-          <i class="fa-solid fa-envelope"></i>
-          <strong>信箱</strong>
-          <span>4zhong@yhes.chc.edu.tw</span>
-        </div>
-        <div class="contact-item">
+
+        <aside class="contact-qr">
+          <img src="qrcode.png" alt="班級 QR Code" class="mini-qr" width="450" height="450">
+          <p><i class="fa-solid fa-qrcode"></i> 掃碼快速連結首頁</p>
+        </aside>
+      </div>
+
+      <div class="map-card reveal">
+        <div class="map-inner">
           <i class="fa-solid fa-location-dot"></i>
-          <strong>地址</strong>
-          <span>育華國小 四年忠班教室</span>
+          <div>
+            <h3>學校位置</h3>
+            <p class="tbd">【請填入學校完整地址】</p>
+            <a class="btn btn-ghost btn-sm" href="https://maps.google.com/" target="_blank" rel="noopener">
+              <i class="fa-solid fa-map-location-dot"></i> 開啟地圖
+            </a>
+          </div>
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <footer>
-    <p><i class="fa-solid fa-heart"></i> 育華國小 四年忠班 教學網站</p>
-    <p>© 2026 版權所有 &nbsp;|&nbsp; 設計與製作：四年忠班</p>
-  </footer>
+</main>
 
+<!-- ==================== 頁尾 ==================== -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <img src="logo.png" alt="班級貓咪" class="footer-logo">
+      <div>
+        <h3>育華國小 四年忠班</h3>
+        <p>用愛陪伴，讓每隻貓咪都能找到自己的舞台。</p>
+      </div>
+    </div>
+
+    <nav class="footer-nav" aria-label="頁尾導覽">
+      <a href="#class">班級</a>
+      <a href="#timetable">課表</a>
+      <a href="#homework">作業</a>
+      <a href="#resources">資源</a>
+      <a href="#gallery">相簿</a>
+      <a href="#contact">聯絡</a>
+    </nav>
+
+    <div class="footer-bottom">
+      <p>&copy; <span id="year">2026</span> 育華國小 四年忠班 教學網站</p>
+      <p class="footer-credit"><i class="fa-solid fa-code"></i> 圖示：Font Awesome Free｜字型：Google Fonts</p>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="回到頂端"><i class="fa-solid fa-arrow-up"></i></button>
+
+<script src="script.js"></script>
 </body>
 </html>
